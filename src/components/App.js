@@ -37,22 +37,22 @@ class App extends Component {
                   exact
                   path="/"
                   component={Dashboard}
-                  isAuthenticated={this.isAuthenticated}
+                  isAuthenticated={this.isAuthenticated()}
                 />
                 <PrivateRoute
                   path='/questions/:id'
                   component={QuestionView}
-                  isAuthenticated={this.isAuthenticated}
+                  isAuthenticated={this.isAuthenticated()}
                 />
                 <PrivateRoute
                   path='/leaderboard'
                   component={LeaderBoard}
-                  isAuthenticated={this.isAuthenticated}
+                  isAuthenticated={this.isAuthenticated()}
                 />
                 <PrivateRoute
                   path='/add'
                   component={NewQuestion}
-                  isAuthenticated={this.isAuthenticated}
+                  isAuthenticated={this.isAuthenticated()}
                 />
                 <Route component={NotFound} />
               </Switch>
