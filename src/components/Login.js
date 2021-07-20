@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 import { handleLogin } from '../actions/shared';
 
 class Login extends Component {
     state = {
-        authID: ''
+        authID: '',
+        redirect: false
     }
     handleChange = (e) => {
         this.setState({ authID: e.target.value });
@@ -18,7 +20,7 @@ class Login extends Component {
         const { dispatch, questions, users } = this.props
         const id = this.state.authID
         dispatch(handleLogin(id, users, questions))
-        this.props.history.push('/');
+        this.setState({ redirect: true });
     }
 
     render() {
@@ -42,7 +44,13 @@ class Login extends Component {
                 >
                     Login
                 </button>
+                {
+                    this.state.redirect &&
+                    <Redirect to="/" />
+
+                }
             </form>
+
         );
     }
 }
@@ -52,4 +60,4 @@ function mapStateToProps({ users, questions }) {
         questions
     }
 }
-export default connect(mapStateToProps)(Login)
+export default withRouter(connect(mapStateToProps)(Login))

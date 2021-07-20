@@ -1,11 +1,15 @@
+import { Fragment } from "react";
 import { Redirect, Route } from "react-router-dom";
 import Nav from "./Nav";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { isAuthenticated } = rest;
+    const { isAuthenticated, auth } = rest;
+    let b = !(Object.keys(auth).length === 0 && auth.constructor === Object)
+    console.log('private rouuuuuuuuuuute', auth, b);
+
     return (
         <Route {...rest} render={props => (
-            isAuthenticated ? (
+            b ? (
                 <div>
                     <Nav />
                     <Component {...props} />
@@ -20,6 +24,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         />
     );
 };
+
 /*
 
 function mapStateToProps({ authedUser }) {

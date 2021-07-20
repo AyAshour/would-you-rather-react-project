@@ -55,11 +55,11 @@ function mapStateToProps({ questions }) {
     const answeredQ = questions.answeredQ
     const unAnsweredQ = questions.unAnsweredQ
     return {
-        answeredQ,
-        unAnsweredQ,
-        questionIds: Object.keys(questions)
-            .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+        answeredQ: answeredQ
+            .sort((a, b) => b.timestamp - a.timestamp),
+        unAnsweredQ: unAnsweredQ
+            .sort((a, b) => b.timestamp - a.timestamp),
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Dashboard))
+export default connect(mapStateToProps)(Dashboard)

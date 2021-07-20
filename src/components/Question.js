@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 
 class Question extends Component {
     render() {
-        const { question } = this.props
-
+        const { _question } = this.props
+        console.log("hereeeq", _question)
         return (
             <div>
                 <p>would you rather?</p>
-                <span>{question.optionOne.text}</span><br />
-                <span>{question.optionTwo.text}</span>
+                <span>{_question.optionOne.text}</span><br />
+                <span>{_question.optionTwo.text}</span>
             </div>
         )
     }
