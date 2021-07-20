@@ -11,3 +11,6 @@ To Run the project:
 
 * install all project dependencies with `npm install`
 * run with `npm start`
+
+# Author
+* - [Aya Ashour](https://github.com/AyAshour)
