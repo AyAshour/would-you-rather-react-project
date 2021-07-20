@@ -19,10 +19,8 @@ class Login extends Component {
         dispatch(handleLogin(id, users, questions))
         this.setState({ redirect: true });
 
-        console.log("locatiiiiiiiiiiiion", this.props.location)
         if (this.props.location.state)
             this.setState({ to: this.props.location.state.from });
-        console.log("locatiiiiiiiiiiiion", this.state.to)
     }
 
     render() {

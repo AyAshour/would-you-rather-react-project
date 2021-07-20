@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import UnAnsweredQuestion from './UnAnsweredQuestion'
 
 class QuestionView extends Component {
@@ -26,47 +27,52 @@ class QuestionView extends Component {
         const authedUserOption = this.authedUserVote(authedUser.answers, id)
         return (
             <div>
-                {this.props.ui === 'answered' ?
-                    <div>
-                        <img
-                            src={avatarURL}
-                            alt={`Avatar of ${avatarURL}`}
-                            className='avatar'
-                        />
-                        <p>{name} asks</p>
-                        <p>would you rather?</p>
-                        <ul>
-                            <li>
-                                <p>{optionOne.text}</p>
-                                <span>
-                                    votes:{op1.votes} out of {totalVotes} votes
-                                </span><br />
-                                <span>
-                                    percentage: {op1.percent}%
-                                </span><br />
-                                {authedUserOption === 'optionOne' && <span>
-                                    you voted here
-                                </span>}
-                            </li>
-                            <li>
-                                <p>{optionTwo.text}</p>
-                                <span>
-                                    votes:{op2.votes} out of {totalVotes} votes
-                                </span><br />
-                                <span>
-                                    percentage: {op2.percent}%
-                                </span><br />
-                                {authedUserOption === 'optionTwo' && <span>
-                                    you voted here
-                                </span>}
-                            </li>
-                        </ul>
+                {this.props.user === null
+                    ? <Redirect to="/not-found" />
+                    : <div>
+                        {this.props.ui === 'answered' ?
+                            <div>
+                                <img
+                                    src={avatarURL}
+                                    alt={`Avatar of ${avatarURL}`}
+                                    className='avatar'
+                                />
+                                <p>{name} asks</p>
+                                <p>would you rather?</p>
+                                <ul>
+                                    <li>
+                                        <p>{optionOne.text}</p>
+                                        <span>
+                                            votes:{op1.votes} out of {totalVotes} votes
+                                        </span><br />
+                                        <span>
+                                            percentage: {op1.percent}%
+                                        </span><br />
+                                        {authedUserOption === 'optionOne' && <span>
+                                            you voted here
+                                        </span>}
+                                    </li>
+                                    <li>
+                                        <p>{optionTwo.text}</p>
+                                        <span>
+                                            votes:{op2.votes} out of {totalVotes} votes
+                                        </span><br />
+                                        <span>
+                                            percentage: {op2.percent}%
+                                        </span><br />
+                                        {authedUserOption === 'optionTwo' && <span>
+                                            you voted here
+                                        </span>}
+                                    </li>
+                                </ul>
 
-                    </div>
-                    :
-                    <UnAnsweredQuestion question={this.props._question} />
+                            </div>
+                            :
+                            <UnAnsweredQuestion question={this.props._question} />
+                        }
+                    </div >
                 }
-            </div >
+            </div>
         )
     }
 }
@@ -87,9 +93,10 @@ function mapStateToProps({ authedUser, users, questions }, props) {
         _question = unAnsweredQ.filter(q => q.id === id)[0]
         ui = 'unAnswered'
     }
-
-    console.log('$$$$', _question.author, id, _question, ui)
-    const user = users[_question.author]
+    let user = null
+    if (_question) {
+        user = users[_question.author]
+    }
 
     return {
         authedUser,
