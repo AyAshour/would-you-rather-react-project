@@ -13,4 +13,4 @@ To Run the project:
 * run with `npm start`
 
 # Author
-* - [Aya Ashour](https://github.com/AyAshour)
+* [Aya Ashour](https://github.com/AyAshour)
