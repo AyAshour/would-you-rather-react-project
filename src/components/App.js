@@ -3,7 +3,7 @@ import { handleInitialData } from '../actions/shared'
 import React, { Component, Fragment } from 'react'
 import Dashboard from './Dashboard'
 import { LoadingBar } from 'react-redux-loading'
-import { Router, Route, Switch, BrowserRouter } from 'react-router-dom'
+import { Router, Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
 import QuestionView from './QuestionView'
 import LeaderBoard from './LeaderBoard'
 import NewQuestion from './NewQuestion'
@@ -62,6 +62,7 @@ class App extends Component {
                     auth={this.props.authedUser}
                   />
                   <Route component={NotFound} />
+                  <Redirect from="/" to="/add"></Redirect>
                 </Switch>
               </div>
             }

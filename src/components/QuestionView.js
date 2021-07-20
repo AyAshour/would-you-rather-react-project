@@ -88,8 +88,8 @@ function mapStateToProps({ authedUser, users, questions }, props) {
         ui = 'unAnswered'
     }
 
-    const user = users[_question.author]
     console.log('$$$$', _question.author, id, _question, ui)
+    const user = users[_question.author]
 
     return {
         authedUser,

@@ -5,11 +5,11 @@ import Nav from "./Nav";
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const { isAuthenticated, auth } = rest;
     let b = !(Object.keys(auth).length === 0 && auth.constructor === Object)
-    console.log('private rouuuuuuuuuuute', auth, b);
+    console.log('private rouuuuuuuuuuute', isAuthenticated, b)
 
     return (
         <Route {...rest} render={props => (
-            b ? (
+            isAuthenticated ? (
                 <div>
                     <Nav />
                     <Component {...props} />

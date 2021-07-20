@@ -6,21 +6,23 @@ import { handleLogin } from '../actions/shared';
 class Login extends Component {
     state = {
         authID: '',
-        redirect: false
+        redirect: false,
+        to: '/'
     }
     handleChange = (e) => {
         this.setState({ authID: e.target.value });
     }
     handleSubmit = (e) => {
-        console.log('Your id is: ' + this.props.dispatch);
         e.preventDefault();
-        //set authed user action
-        //get questions
-        //redirect to dashboard
         const { dispatch, questions, users } = this.props
         const id = this.state.authID
         dispatch(handleLogin(id, users, questions))
         this.setState({ redirect: true });
+
+        console.log("locatiiiiiiiiiiiion", this.props.location)
+        if (this.props.location.state)
+            this.setState({ to: this.props.location.state.from });
+        console.log("locatiiiiiiiiiiiion", this.state.to)
     }
 
     render() {
@@ -46,7 +48,8 @@ class Login extends Component {
                 </button>
                 {
                     this.state.redirect &&
-                    <Redirect to="/" />
+
+                    <Redirect to={this.state.to} />
 
                 }
             </form>
