@@ -3,7 +3,7 @@ import { handleInitialData } from '../actions/shared'
 import React, { Component, Fragment } from 'react'
 import Dashboard from './Dashboard'
 import { LoadingBar } from 'react-redux-loading'
-import { Router, Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
 import QuestionView from './QuestionView'
 import LeaderBoard from './LeaderBoard'
 import NewQuestion from './NewQuestion'
@@ -20,8 +20,6 @@ class App extends Component {
   }
   isAuthenticated = () => {
     const auth = this.props.authedUser
-    console.log("authhhhhhh", auth, !(Object.keys(auth).length === 0 && auth.constructor === Object))
-
     return !(Object.keys(auth).length === 0 && auth.constructor === Object)
   }
   render() {

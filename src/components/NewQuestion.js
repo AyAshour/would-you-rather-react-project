@@ -40,7 +40,6 @@ class NewQuestion extends Component {
     }
     render() {
         const { option1, option2 } = this.state
-        console.log('staaaaaaaaaaate', this.state)
         if (this.state.toHome) {
             return (<Redirect to='/' />)
         }

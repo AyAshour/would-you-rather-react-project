@@ -3,14 +3,12 @@ import { connect } from 'react-redux'
 import Question from './Question'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { withRouter } from 'react-router-dom';
 
 class Dashboard extends Component {
 
     goToQuestion = (id) => {
 
         this.props.history.push("/questions/" + id);
-        //<Redirect to={{ pathname: "/questions/" + id }} />
 
     }
     render() {
@@ -50,10 +48,10 @@ class Dashboard extends Component {
     }
 }
 
-function mapStateToProps({ questions }) {
-
-    const answeredQ = questions.answeredQ
-    const unAnsweredQ = questions.unAnsweredQ
+function mapStateToProps({ questions, authedUser }) {
+    const answeredQ = Object.values(questions).filter(x => Object.keys(authedUser.answers).includes(x.id))
+    const unAnsweredQ = Object.values(questions).filter(x => !Object.keys(authedUser.answers).includes(x.id))
+    console.log(questions, unAnsweredQ)
     return {
         answeredQ: answeredQ
             .sort((a, b) => b.timestamp - a.timestamp),

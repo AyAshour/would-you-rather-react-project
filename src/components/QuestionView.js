@@ -20,57 +20,59 @@ class QuestionView extends Component {
         return Object.keys(answers).includes(questionId) ? answers[questionId] : null
     }
     render() {
+        if (!this.props._question || !this.props.user) {
+            return (<Redirect to="/404" />)
+        }
         const { id, optionOne, optionTwo } = this.props._question
         const { name, avatarURL } = this.props.user
         const { totalVotes, op1, op2 } = this.calculateVotes(optionOne, optionTwo)
         const { authedUser } = this.props
         const authedUserOption = this.authedUserVote(authedUser.answers, id)
+
         return (
             <div>
-                {this.props.user === null
-                    ? <Redirect to="/not-found" />
-                    : <div>
-                        {this.props.ui === 'answered' ?
-                            <div>
-                                <img
-                                    src={avatarURL}
-                                    alt={`Avatar of ${avatarURL}`}
-                                    className='avatar'
-                                />
-                                <p>{name} asks</p>
-                                <p>would you rather?</p>
-                                <ul>
-                                    <li>
-                                        <p>{optionOne.text}</p>
-                                        <span>
-                                            votes:{op1.votes} out of {totalVotes} votes
-                                        </span><br />
-                                        <span>
-                                            percentage: {op1.percent}%
-                                        </span><br />
-                                        {authedUserOption === 'optionOne' && <span>
-                                            you voted here
-                                        </span>}
-                                    </li>
-                                    <li>
-                                        <p>{optionTwo.text}</p>
-                                        <span>
-                                            votes:{op2.votes} out of {totalVotes} votes
-                                        </span><br />
-                                        <span>
-                                            percentage: {op2.percent}%
-                                        </span><br />
-                                        {authedUserOption === 'optionTwo' && <span>
-                                            you voted here
-                                        </span>}
-                                    </li>
-                                </ul>
+                {<div>
+                    {this.props.ui === 'answered' ?
+                        <div>
+                            <img
+                                src={avatarURL}
+                                alt={`Avatar of ${avatarURL}`}
+                                className='avatar'
+                            />
+                            <p>{name} asks</p>
+                            <p>would you rather?</p>
+                            <ul>
+                                <li>
+                                    <p>{optionOne.text}</p>
+                                    <span>
+                                        votes:{op1.votes} out of {totalVotes} votes
+                                    </span><br />
+                                    <span>
+                                        percentage: {op1.percent}%
+                                    </span><br />
+                                    {authedUserOption === 'optionOne' && <span>
+                                        you voted here
+                                    </span>}
+                                </li>
+                                <li>
+                                    <p>{optionTwo.text}</p>
+                                    <span>
+                                        votes:{op2.votes} out of {totalVotes} votes
+                                    </span><br />
+                                    <span>
+                                        percentage: {op2.percent}%
+                                    </span><br />
+                                    {authedUserOption === 'optionTwo' && <span>
+                                        you voted here
+                                    </span>}
+                                </li>
+                            </ul>
 
-                            </div>
-                            :
-                            <UnAnsweredQuestion question={this.props._question} />
-                        }
-                    </div >
+                        </div>
+                        :
+                        <UnAnsweredQuestion question={this.props._question} />
+                    }
+                </div >
                 }
             </div>
         )
@@ -78,14 +80,13 @@ class QuestionView extends Component {
 }
 
 function mapStateToProps({ authedUser, users, questions }, props) {
-    const answeredQ = questions.answeredQ
-    const unAnsweredQ = questions.unAnsweredQ
+    const answeredQ = Object.values(questions).filter(x => Object.keys(authedUser.answers).includes(x.id))
+    const unAnsweredQ = Object.values(questions).filter(x => !Object.keys(authedUser.answers).includes(x.id))
     const { id } = props.match.params
     let ui = ''
     let _question = null
 
     let query = answeredQ.filter(q => q.id === id)
-
     if (query.length !== 0) {
         _question = query[0]
         ui = 'answered'
@@ -93,16 +94,14 @@ function mapStateToProps({ authedUser, users, questions }, props) {
         _question = unAnsweredQ.filter(q => q.id === id)[0]
         ui = 'unAnswered'
     }
-    let user = null
-    if (_question) {
-        user = users[_question.author]
-    }
+    const user = _question ? users[_question.author] : null
 
     return {
         authedUser,
         user,
         _question,
-        ui
+        ui,
+        id
 
     }
 }

@@ -5,11 +5,9 @@ export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
 export const SUBMIT_VOTE = 'SUBMIT_VOTE'
 
-export function receiveQuestions(questions, id, users) {
+export function receiveQuestions(questions) {
     return {
         type: RECEIVE_QUESTIONS,
-        id,
-        users,
         questions
     }
 }

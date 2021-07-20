@@ -30,7 +30,7 @@ class LeaderBoard extends Component {
 
 function mapStateToProps({ users, questions }) {
 
-    const allQuestions = questions.unAnsweredQ.concat(questions.answeredQ)
+    //const allQuestions = questions.unAnsweredQ.concat(questions.answeredQ)
     let _users = []
     for (const u in users) {
         _users.push({
@@ -44,7 +44,9 @@ function mapStateToProps({ users, questions }) {
         })
     }
     for (const u in _users) {
-        _users[u].created = allQuestions.filter(q => q.author === _users[u].id).length
+        _users[u].created = Object.keys(questions).filter(x => questions[x].author === _users[u].id).length
+
+        //allQuestions.filter(q => q.author === _users[u].id).length
         _users[u].score = _users[u].created + _users[u].answered
     }
 

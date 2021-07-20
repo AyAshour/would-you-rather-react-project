@@ -14,23 +14,23 @@ export function handleInitialData() {
         return getInitialData()
             .then(({ users, questions }) => {
                 dispatch(receiveUsers(users))
-                dispatch(receiveQuestions(questions, AUTHED_ID, users))
+                dispatch(receiveQuestions(questions))
                 dispatch(setAuthedUser(AUTHED_ID, users))
                 dispatch(hideLoading())
             })
     }
 }
-export function handleLogin(id, users, questions) {
+export function handleLogin(id, users) {
     return (dispatch) => {
         dispatch(setAuthedUser(
             id,
             users
         ));
-        (dispatch(receiveQuestions(
-            questions,
-            id,
-            users
-        ))
-        );
+        /* (dispatch(receiveQuestions(
+             questions,
+             id,
+             users
+         ))
+         );*/
     }
 }

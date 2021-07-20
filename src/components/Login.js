@@ -16,7 +16,7 @@ class Login extends Component {
         e.preventDefault();
         const { dispatch, questions, users } = this.props
         const id = this.state.authID
-        dispatch(handleLogin(id, users, questions))
+        dispatch(handleLogin(id, users))
         this.setState({ redirect: true });
 
         if (this.props.location.state)
